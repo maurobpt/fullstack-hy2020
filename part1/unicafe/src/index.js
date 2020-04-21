@@ -17,6 +17,8 @@ const App = () => {
 
   const Display = props => <div>{props.text}: {props.value}</div>
 
+  const total=good+neutral+bad;
+
   return (
     <div>
       <h1>give feedback</h1>
@@ -27,6 +29,9 @@ const App = () => {
       <Display text="good" value={good} />
       <Display text="neutral" value={neutral} />
       <Display text="bad" value={bad} />
+      <Display text="all" value={good+neutral+bad} />
+      <Display text="average" value={good*1+neutral*0+bad*-1/total} />
+      <Display text="positive" value={(good/(total))*100} />
     </div>
   )
 }
