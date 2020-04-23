@@ -4,6 +4,9 @@ import ReactDOM from 'react-dom'
 const Button =(props) =>(
   <button onClick={props.handleClick}>{props.text}</button>
 )
+const Statistics = props => (
+  <div>{props.text}: {props.value}</div>
+)
 
 const App = () => {
   // save clicks of each button to own state
@@ -15,8 +18,6 @@ const App = () => {
   const setToNeutral = () => setNeutral(neutral + 1)
   const setToBad = () => setBad(bad + 1)
 
-  const Display = props => <div>{props.text}: {props.value}</div>
-
   const total=good+neutral+bad;
 
   return (
@@ -26,12 +27,12 @@ const App = () => {
       <Button handleClick={setToNeutral} text="neutral" />
       <Button handleClick={setToBad} text="bad" />
       <h1>statistics</h1>
-      <Display text="good" value={good} />
-      <Display text="neutral" value={neutral} />
-      <Display text="bad" value={bad} />
-      <Display text="all" value={good+neutral+bad} />
-      <Display text="average" value={good*1+neutral*0+bad*-1/total} />
-      <Display text="positive" value={(good/(total))*100} />
+      <Statistics text="good" value={good} />
+      <Statistics text="neutral" value={neutral} />
+      <Statistics text="bad" value={bad} />
+      <Statistics text="all" value={good+neutral+bad} />
+      <Statistics text="average" value={good*1+neutral*0+bad*-1/total} />
+      <Statistics text="positive" value={(good/(total))*100} />
     </div>
   )
 }
