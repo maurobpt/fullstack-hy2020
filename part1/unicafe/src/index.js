@@ -4,8 +4,19 @@ import ReactDOM from 'react-dom'
 const Button =(props) =>(
   <button onClick={props.handleClick}>{props.text}</button>
 )
-const Statistics = props => (
+const Statistic = props => (
   <div>{props.text}: {props.value}</div>
+)
+
+const Statistics = props => (
+  <>
+    <Statistic text="good" value={props.good} />
+    <Statistic text="neutral" value={props.neutral} />
+    <Statistic text="bad" value={props.bad} />
+    <Statistic text="all" value={props.good+props.neutral+props.bad} />
+    <Statistic text="average" value={props.good*1+props.neutral*0+props.bad*-1/props.total} />
+    <Statistic text="positive" value={(props.good/(props.total))*100} />
+  </>
 )
 
 const App = () => {
@@ -29,14 +40,7 @@ const App = () => {
       <h1>statistics</h1>
       {
       total>0
-      ?<>
-        <Statistics text="good" value={good} />
-        <Statistics text="neutral" value={neutral} />
-        <Statistics text="bad" value={bad} />
-        <Statistics text="all" value={good+neutral+bad} />
-        <Statistics text="average" value={good*1+neutral*0+bad*-1/total} />
-        <Statistics text="positive" value={(good/(total))*100} />
-        </>
+      ? <Statistics good={good} neutral={neutral} bad={bad} total={total} />
       : <span>No feedback given</span>
       }
     </div>
