@@ -5,18 +5,18 @@ const Button =(props) =>(
   <button onClick={props.handleClick}>{props.text}</button>
 )
 const Statistic = props => (
-  <div>{props.text}: {props.value}</div>
+  <tr><td>{props.text}</td><td>{props.value}</td></tr>
 )
 
 const Statistics = props => (
-  <>
+  <table>
     <Statistic text="good" value={props.good} />
     <Statistic text="neutral" value={props.neutral} />
     <Statistic text="bad" value={props.bad} />
     <Statistic text="all" value={props.good+props.neutral+props.bad} />
     <Statistic text="average" value={props.good*1+props.neutral*0+props.bad*-1/props.total} />
     <Statistic text="positive" value={(props.good/(props.total))*100} />
-  </>
+  </table>
 )
 
 const App = () => {
