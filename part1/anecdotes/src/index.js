@@ -1,6 +1,21 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+class TopVote extends React.Component {
+  render() {
+    let points = this.props.points;
+    let maxVote = Math.max.apply(Math, points);
+    let index = points.indexOf(maxVote);
+    let anecdotes = this.props.anecdotes;
+    return (
+      <>
+        <p>{anecdotes[index]}</p>
+        <p>has {maxVote} votes</p>
+      </>
+    );
+  }
+}
+
 class Button extends React.Component {
   render() {
     return <button onClick={this.props.eventClick}>{this.props.name}</button>;
@@ -50,6 +65,8 @@ class App extends React.Component {
           name="Next anecdote"
           eventClick={() => this.next(0, anecdotes.length)}
         />
+        <h1>Anecdote with most votes</h1>
+        <TopVote anecdotes={anecdotes} points={this.state.points} />
       </>
     );
   }
