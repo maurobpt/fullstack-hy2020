@@ -31,32 +31,43 @@ const Total = (obj) => {
   )
 }
 
+const Course = (obj) => {
+  return (
+    <div>
+      <Header course={obj.course.name} />
+      <Content parts={obj.course.parts} />
+      <Total parts={obj.course.parts} />
+    </div>
+  )
+}
 
 const App = () => {
   // const-definitions
   const course = {
+    id: 1,
     name: 'Half Stack application development',
     parts: [
       {
         name: 'Fundamentals of React',
-        exercises: 10
+        exercises: 10,
+        id: 1
       },
       {
         name: 'Using props to pass data',
-        exercises: 7
+        exercises: 7,
+        id: 2
       },
       {
         name: 'State of a component',
-        exercises: 14
+        exercises: 14,
+        id: 3
       }
     ]
   }
 
   return (
     <div>
-      <Header course={course.name} />
-      <Content parts={course.parts} />
-      <Total parts={course.parts} />
+      <Course course={course} />
     </div>
   )
 }
