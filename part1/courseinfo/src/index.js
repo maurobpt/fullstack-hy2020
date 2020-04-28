@@ -21,13 +21,14 @@ const Content = (obj) => {
     <Part name={obj['parts'][0]['name']} exercises={obj['parts'][0]['exercises']} />
     <Part name={obj['parts'][1]['name']} exercises={obj['parts'][1]['exercises']} />
     <Part name={obj['parts'][2]['name']} exercises={obj['parts'][2]['exercises']} />
+    <Part name={obj['parts'][3]['name']} exercises={obj['parts'][3]['exercises']} />
     </div>
   )
 }
 const Total = (obj) => {
   //console.log(obj);
   return (
-    <p>Number of exercises {obj['parts'][0]['exercises'] + obj['parts'][1]['exercises'] + obj['parts'][2]['exercises']}</p>
+    <p><b>Total of {obj['parts'][0]['exercises'] + obj['parts'][1]['exercises'] + obj['parts'][2]['exercises']+ obj['parts'][3]['exercises']} exercises</b></p>
   )
 }
 
@@ -61,6 +62,11 @@ const App = () => {
         name: 'State of a component',
         exercises: 14,
         id: 3
+      },
+      {
+        name: 'Redux',
+        exercises: 11,
+        id: 4
       }
     ]
   }
