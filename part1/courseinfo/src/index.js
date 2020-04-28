@@ -27,8 +27,12 @@ const Content = (obj) => {
 }
 const Total = (obj) => {
   //console.log(obj);
+  const total = obj.parts.reduce(
+    (prevValue, currentValue) => prevValue + currentValue.exercises,
+    0
+  );
   return (
-    <p><b>Total of {obj['parts'][0]['exercises'] + obj['parts'][1]['exercises'] + obj['parts'][2]['exercises']+ obj['parts'][3]['exercises']} exercises</b></p>
+    <p><b>Total of {total} exercises</b></p>
   )
 }
 
