@@ -6,7 +6,7 @@ const Button =(props) =>(
 
 const App = () => {
   const [ persons, setPersons ] = useState([
-    { id: 0,name: 'Arto Hellas' }
+    { id: 0, name: 'Arto Hellas' }
   ]) 
   const [ newName, setNewName ] = useState('')
   const setToNewName = () => setNewName(document.getElementById("name").value)
@@ -18,15 +18,23 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault();
-    //console.log(event);
-    const personObject = {
-      name: newName,
-      id: persons.length + 1,
-    };
-    setPersons(persons.concat(personObject));
-    setNewName('');
-    //console.log(persons.length);
-    //console.log( JSON.stringify(persons));
+    let readyToAdd=true;
+    persons.map(person => {
+      if(person.name==newName){
+        alert(person.name + " is already added to phonebook");
+        readyToAdd=false;
+      }
+    })
+
+    if(readyToAdd==true){
+      const personObject = {
+        name: newName,
+        id: persons.length + 1,
+      };
+      setPersons(persons.concat(personObject));
+      setNewName('');
+    }
+    
   }
   function PersonsList() {
     const listItems = persons.map(person => <div key={person.id}>{person.name}</div>);  return (
