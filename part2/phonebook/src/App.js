@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
-
-const Button =(props) =>(
-  <button onClick={props.handleClick}>{props.text}</button>
-)
+import React, { useState, useEffect } from 'react'
+import Filter from './components/Filter'
+import PersonForm from './components/PersonForm'
+import Persons from './components/Persons'
 
 const App = () => {
   const [ persons, setPersons ] = useState([
@@ -24,12 +23,12 @@ const App = () => {
     setToNewNumber(event.target.value);
   };
 
-  const [searchTerm, setSearchTerm] = React.useState("");
-  const [searchResults, setSearchResults] = React.useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
   const handleChange = event => {
       setSearchTerm(event.target.value);
     };
- React.useEffect(() => {
+ useEffect(() => {
     const results = persons.filter(person =>
       person.name.includes(searchTerm)
     );
@@ -40,13 +39,13 @@ const App = () => {
     event.preventDefault();
     let readyToAdd=true;
     persons.map(person => {
-      if(person.name==newName){
+      if(person.name===newName){
         alert(person.name + " is already added to phonebook");
         readyToAdd=false;
       }
     })
 
-    if(readyToAdd==true){
+    if(readyToAdd===true){
       const personObject = {
         name: newName,
         number: newNumber,
@@ -62,38 +61,15 @@ const App = () => {
     }
     
   }
-  /*function PersonsList() {
-    const listItems = persons.map(person => <div key={person.id}>{person.name} {person.number}</div>);  
-      return ( <div>{listItems}</div>  );
-  }*/
-
-  function PersonsFilteredList() {
-    const listItems = searchResults.map(person => <div key={person.id}>{person.name} {person.number}</div>);  
-      return ( <div>{listItems}</div>  );
-  }
 
   return (
     <div style={{margin:'4px'}}>
       <h2>Phonebook</h2>
-      <div>
-        filter shown with<input type="text" placeholder="Search"
-        value={searchTerm}
-        onChange={handleChange}></input>
-      </div>
+      <Filter value={searchTerm} onChange={handleChange} />
       <h3>add a new</h3>
-      <form onSubmit={addPerson}>
-        <div>
-          name: <input id="name" type="text" value={newName} onChange={handleNameChange} />
-        </div>
-        <div>
-          number: <input id="number" type="tel" pattern="[0-9]{3}-[0-9]{6}" value={newNumber} onChange={handleNumberChange} />
-        </div>
-        <div>
-        <Button text="add" />
-        </div>
-      </form>
+      <PersonForm onSubmit={addPerson} valueName={newName} onChangeName={handleNameChange} valueNumber={newNumber} onChangeNumber={handleNumberChange} />
       <h2>Numbers</h2>
-      <PersonsFilteredList />
+      <Persons searchData={searchResults} />
     </div>
   )
 }
