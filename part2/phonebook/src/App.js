@@ -5,18 +5,15 @@ import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 
 const App = () => {
-  /*const test_data = axios.get('http://localhost:3001/persons');
-  test_data.then(response => {
-    console.log(response)
-  })*/
 
   const [ persons, setPersons ] = useState([]);
 
+  const baseUrl = 'http://localhost:3001/persons'
+  const getAll = () => axios.get(baseUrl)
+  const create = newObject => axios.post(baseUrl, newObject)
   // Application's effect
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
+    getAll().then(response => {
         setPersons(response.data);
         setSearchResults(response.data);
       })
@@ -58,17 +55,15 @@ const App = () => {
     })
 
     if(readyToAdd===true){
-      const personObject = {
-        name: newName,
-        number: newNumber,
-        id: persons.length + 1,
-      };
-      const newpersons = persons.concat(personObject)
-      setPersons(newpersons);
-      setSearchResults(newpersons);
-      setNewName('');
-      setNewNumber('');
-      setSearchTerm('');
+
+      create({ name: newName, number: newNumber, id: persons.length + 1 })
+    .then(response => {
+      setPersons(persons.concat(response.data))
+      setSearchResults(persons.concat(response.data))
+      setNewName('')
+      setNewNumber('')
+      setSearchTerm('')
+    })
 
     }
     
