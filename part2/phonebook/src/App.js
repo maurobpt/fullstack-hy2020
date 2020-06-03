@@ -11,9 +11,9 @@ const App = () => {
   // Application's effect
   useEffect(() => {
     personService
-    .getAll().then(response => {
-        setPersons(response);
-        setSearchResults(response);
+    .getAll().then(initialPersons => {
+        setPersons(initialPersons);
+        setSearchResults(initialPersons);
       })
     }, [])
 
@@ -53,26 +53,25 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault();
-    let readyToAdd=true;
-    persons.map(person => {
-      if(person.name===newName){
-        alert(person.name + " is already added to phonebook");
-        readyToAdd=false;
-      }
-    })
-
-    if(readyToAdd===true){
-
-    personService
-    .create({ name: newName, number: newNumber, id: persons.length + 1 })
-    .then(response => {
-      setPersons(persons.concat(response))
-      setSearchResults(persons.concat(response))
-      setNewName('')
-      setNewNumber('')
-      setSearchTerm('')
-    })
-
+    const duplicateCheck = persons.find(person => person.name === newName)
+    if (typeof duplicateCheck !== 'undefined' && duplicateCheck.number !== newNumber) {
+      personService
+        .update(duplicateCheck.id, { name: duplicateCheck.name, number: newNumber})
+        .then(returnedPerson => {
+          if (window.confirm(`${returnedPerson.name} is already added to phonebook, 
+            replace the old number with a new one?`)) {
+            setPersons(persons.map(person => person.id !== duplicateCheck.id ? person : returnedPerson))
+            setSearchResults(persons.map(person => person.id !== duplicateCheck.id ? person : returnedPerson))
+          }
+          setNewName('')
+          setNewNumber('')
+        })
+        return
+    } else if (typeof duplicateCheck !== 'undefined') {
+        alert(`${newName} is already added to phonebook`)
+        setNewName('')
+        setNewNumber('')
+        return
     }
     
   }
