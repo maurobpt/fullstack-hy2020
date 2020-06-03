@@ -9,7 +9,8 @@ import Notification from './components/Notification'
 const App = () => {
 
   const [ persons, setPersons ] = useState([]);
-  const [confirmationMessage, setConfirmationMessage] = useState(null)
+  const [message, setmessage] = useState(null)
+  const [messageType, setMessageType] = useState(null) // 'confirmation' or 'error'
   // Application's effect
   useEffect(() => {
     personService
@@ -47,10 +48,21 @@ const App = () => {
   const deleteName = (event) => {
     event.preventDefault()
     const id = parseInt(event.target.value)
+    const name = persons[id -1].name
     personService.remove(persons[id -1])
     // prevent manual refresh
-    setPersons(persons.filter(person => person.id !== id ))
-    setSearchResults(persons.filter(person => person.id !== id ))
+    .catch(error => {
+      setMessageType('error')
+      setmessage(`Information of ${name} has already been removed from server`)
+      setTimeout(() => {
+        setmessage(null)
+        setMessageType('error')
+      }, 5000)
+      setPersons(persons.filter(n => n.id !== id))
+      setSearchResults(persons.filter(n => n.id !== id));
+    })
+    setPersons(persons.filter(n => n.id !== id))
+    setSearchResults(persons.filter(n => n.id !== id));
   }
 
   const addPerson = (event) => {
@@ -84,9 +96,11 @@ const App = () => {
         setSearchResults(persons.concat(response))
         setNewName('')
         setNewNumber('')
-        setConfirmationMessage(`Added ${response.name}`)
+        setMessageType('confirmation')
+        setmessage(`Added ${response.name}`)
         setTimeout(() => {
-          setConfirmationMessage(null)
+          setMessageType(null)
+          setmessage(null)
         }, 5000)
       })
     
@@ -95,7 +109,7 @@ const App = () => {
   return (
     <div style={{margin:'4px'}}>
       <h2>Phonebook</h2>
-      <Notification message={confirmationMessage} />
+      <Notification message={message} messageType={messageType} />
       <Filter value={searchTerm} onChange={handleChange} />
       <h3>add a new</h3>
       <PersonForm onSubmit={addPerson} valueName={newName} onChangeName={handleNameChange} valueNumber={newNumber} onChangeNumber={handleNumberChange} />
