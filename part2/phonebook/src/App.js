@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react'
+import './index.css'
 import personService from './services/persons'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
+import Notification from './components/Notification'
 
 const App = () => {
 
   const [ persons, setPersons ] = useState([]);
-
+  const [confirmationMessage, setConfirmationMessage] = useState(null)
   // Application's effect
   useEffect(() => {
     personService
@@ -73,12 +75,27 @@ const App = () => {
         setNewNumber('')
         return
     }
+
+    // If the name is not in phonebook, add a new person
+    personService
+      .create({ name: newName, number: newNumber })
+      .then(response => {
+        setPersons(persons.concat(response))
+        setSearchResults(persons.concat(response))
+        setNewName('')
+        setNewNumber('')
+        setConfirmationMessage(`Added ${response.name}`)
+        setTimeout(() => {
+          setConfirmationMessage(null)
+        }, 5000)
+      })
     
   }
 
   return (
     <div style={{margin:'4px'}}>
       <h2>Phonebook</h2>
+      <Notification message={confirmationMessage} />
       <Filter value={searchTerm} onChange={handleChange} />
       <h3>add a new</h3>
       <PersonForm onSubmit={addPerson} valueName={newName} onChangeName={handleNameChange} valueNumber={newNumber} onChangeNumber={handleNumberChange} />
