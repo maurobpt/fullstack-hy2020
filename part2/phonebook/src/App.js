@@ -42,6 +42,15 @@ const App = () => {
     setSearchResults(results);
   }, [searchTerm]);
 
+  const deleteName = (event) => {
+    event.preventDefault()
+    const id = parseInt(event.target.value)
+    personService.remove(persons[id -1])
+    // prevent manual refresh
+    setPersons(persons.filter(person => person.id !== id ))
+    setSearchResults(persons.filter(person => person.id !== id ))
+  }
+
   const addPerson = (event) => {
     event.preventDefault();
     let readyToAdd=true;
@@ -75,7 +84,7 @@ const App = () => {
       <h3>add a new</h3>
       <PersonForm onSubmit={addPerson} valueName={newName} onChangeName={handleNameChange} valueNumber={newNumber} onChangeNumber={handleNumberChange} />
       <h2>Numbers</h2>
-      <Persons searchData={searchResults} />
+      <Persons searchData={searchResults} deleteName={deleteName}/>
     </div>
   )
 }
