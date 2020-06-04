@@ -54,6 +54,32 @@ app.delete('/api/persons/:id', (request, response) => {
   response.status(204).end()
 })
 
+// Id is generated in a range between 1 and 10 billion
+const generateId = () => {
+  const max = 10000000000
+  const min = 1000000000
+  return(Math.floor((Math.random() * (max - min) + min)))
+}
+
+app.post('/api/persons', (request, response) => {
+  const body = request.body
+
+  if (!body.name) {
+    return response.status(400).json({
+      error: 'person missing'
+    })
+  }
+
+  const person = {
+    name: body.name,
+    number: body.number,
+    id: generateId(),
+  }
+
+  persons = persons.concat(person)
+  response.json(person)
+})
+
 const PORT = 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
