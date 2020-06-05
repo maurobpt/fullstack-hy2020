@@ -104,7 +104,14 @@ const App = () => {
           setmessage(null)
         }, 5000)
       })
-    
+      .catch(error => {
+        setMessageType('error')
+        setmessage(`${JSON.stringify(error.response.data)}`)
+        setTimeout(() => {
+          setmessage(null)
+          setMessageType('error')
+        }, 5000)
+      })
   }
 
   return (
