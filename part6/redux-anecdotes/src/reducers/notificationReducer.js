@@ -1,4 +1,4 @@
-const notificationReducer = (state = 'Welcome!!', action) => {
+const notificationReducer = (state = null, action) => {
   console.log('state now: ', state)
   console.log('action', action)
 
@@ -10,4 +10,19 @@ const notificationReducer = (state = 'Welcome!!', action) => {
   }
 }
 
+export const showNotification = (message) => {
+  return {
+    type: 'NOTIFICATION',
+    message
+  }
+}
+
+export const hideNotification = () => {
+  return {
+    type: 'NOTIFICATION',
+    message: null
+  }
+}
+
 export default notificationReducer
+
