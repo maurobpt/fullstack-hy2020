@@ -6,6 +6,8 @@
     "build": "webpack --mode=production",
     "start": "webpack-dev-server --mode=development"
   },
+  "author": "Mauro Brandão",
+  "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.7.7",
     "@babel/preset-env": "^7.7.7",

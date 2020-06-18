@@ -10,7 +10,7 @@
   "jest": {
     "testEnvironment": "node"
   },
-  "author": "Tudor Florea",
+  "author": "Mauro Brandão",
   "license": "MIT",
   "dependencies": {
     "bcrypt": "^3.0.6",
