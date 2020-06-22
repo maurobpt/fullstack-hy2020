@@ -1,7 +1,7 @@
 import React from 'react'
 
 const RecommendedBooks = (props) => {
-
+    
     const {user, show} = props;
     if(!show || !user) return null
 
@@ -39,4 +39,4 @@ const RecommendedBooks = (props) => {
     )
 }
 
-export default RecommendedBooks; 
+export default RecommendedBooks;

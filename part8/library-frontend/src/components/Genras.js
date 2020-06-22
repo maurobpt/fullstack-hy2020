@@ -11,4 +11,4 @@ const Genras = ({genras, onGenraSelected, clear}) => {
     )
 }
 
-export default Genras; 
+export default Genras;
